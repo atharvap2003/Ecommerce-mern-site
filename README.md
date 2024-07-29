@@ -1,7 +1,5 @@
 # Vite + MERN + Tailwind Ecommerce Project
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-
 ## Table of Contents
 
 - [About](#about)
@@ -32,20 +30,10 @@ This project is an Ecommerce website built using the MERN stack with Vite for th
 ## Technologies Used
 
 - **Frontend:**
-  - Vite
-  - React
-  - Tailwind CSS
-  - Redux Toolkit
-  - Framer Motion
+  Vite, React, Tailwind CSS, Redux Toolkit, Framer Motion
 
 - **Backend:**
-  - Node.js, 
-  - Express.js
-  - MongoDB
-  - Mongoose
-  - Google OAuth
-  - Nodemailer
-  - Multer
+  Node.js, Express.js, MongoDB, Mongoose, Google OAuth, Nodemailer, Multer
 
 ## Installation
 
