@@ -42,7 +42,7 @@ To run this project locally, follow these steps:
 1. **Clone the repository:**
    ```bash
    https://github.com/atharvap2003/Ecommerce-mern-site.git
-   cd Ecommerce-mern-site.git
+   cd Ecommerce-mern-site
 
 2. **Install Dependency:**
    ```bash
