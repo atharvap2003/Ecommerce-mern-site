@@ -96,7 +96,7 @@ export default function LoginPage() {
           </form>
           <div className="mt-2 flex items-center gap-1">
             <p className="">Don't Have Account</p>
-            <a href="/register" className="text-blue-400">
+            <a href="/api/user/register" className="text-blue-400">
               Register
             </a>
           </div>

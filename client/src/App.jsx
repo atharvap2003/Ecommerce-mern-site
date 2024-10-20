@@ -7,8 +7,10 @@ import RegisterPage from "./pages/RegisterPage";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProductUpload from "./pages/productupload";
-import "./App.css";
 import ProductDescription from "./pages/ProductDescription";
+import UserProfile from "./pages/userProfile";
+
+import "./App.css";
 
 function App() {
   const sampleProduct = {
@@ -25,8 +27,9 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/api/user/login" element={<LoginPage />} />
+          <Route path="/api/user/register" element={<RegisterPage />} />
+          <Route path="/api/user/userprofile" element={<UserProfile/>}/>
           <Route path="/productupload" element={<ProductUpload/>} />
           <Route path="/product/:id" element={<ProductDescription product={sampleProduct}/>}/>
           <Route path="/productdescription" element={<ProductDescription />} />

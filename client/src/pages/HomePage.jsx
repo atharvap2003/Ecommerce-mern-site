@@ -5,8 +5,6 @@ import { motion } from "framer-motion";
 
 import { lazy, Suspense } from "react";
 
-// components:
-// import AddedProduct from ;
 import BannerSection from "../components/BannerSection";
 
 const AddedProduct = lazy(() => import("../components/AddedProduct"));
@@ -14,11 +12,9 @@ const AddedProduct = lazy(() => import("../components/AddedProduct"));
 const HomePage = () => {
   const navigate = useNavigate();
 
-  const username = " ";
-  //via.placeholder.com/1200x400
   return (
     <>
-      <div className="bg-gray-200 text-black min-h-screen  ">
+      <div className="bg-gray-50 text-black ">
         <div className="container mx-auto px-4 sm:px-6 md:px-4 lg:px-36 py-16">
           <div className="flex md:flex-row flex-col items-center justify-evenly">
             <motion.div
@@ -54,9 +50,9 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* <Suspense fallback={<p className="p-40">Loading...</p>}> */}
+      <Suspense fallback={<p className="p-40">Loading...</p>}>
         <AddedProduct />
-     
+      </Suspense>
 
       <BannerSection />
     </>

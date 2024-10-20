@@ -1,3 +1,4 @@
+require("dotenv").config;
 const express = require("express");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
@@ -13,8 +14,10 @@ const sendWelcomeEmail = require("./utils/mailer");
 //models:
 const User = require("./models/user");
 const Product = require("./models/Product");
+const UserProfile = require("./models/userProfile");
 
 const app = express();
+const secret = process.env.JWT_SECRET;
 const PORT = 8000;
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -23,7 +26,6 @@ app.use(express.json());
 app.use(cookieParser());
 
 const salt = bcrypt.genSaltSync(10);
-const secret = "abcdefghijk";
 
 // Multer configuration
 const storage = multer.diskStorage({
@@ -31,15 +33,13 @@ const storage = multer.diskStorage({
     cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
+    cb(null, Date.now() + "-" + file.originalname.trim());
   },
 });
 const upload = multer({ storage: storage });
 
 mongoose
-  .connect(
-    "mongodb+srv://atharvapandharikar5:TOIpfctweQDahnKt@cluster0.5a7iolh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-  )
+  .connect(process.env.MONGO_URL)
   .then(() => {
     console.log("MongoDB Connected Successfully");
   })
@@ -55,6 +55,7 @@ app.post("/api/auth/register", async (req, res) => {
       email,
       password: bcrypt.hashSync(password, salt),
     });
+
     // Send welcome email
     sendWelcomeEmail(email, username);
     return res.json({
@@ -98,19 +99,19 @@ app.get("/api/productdata", async (req, res) => {
   }
 });
 
-app.get("/api/product/:id",async(req, res)=>{
+app.get("/api/product/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const ProductData = await Product.findById(id);
     res.json(ProductData);
   } catch (error) {
-    console.error("Error in fetching Product Data ",error);
-    res.json({Error: "Error in Fetching Specific Product:"})
+    console.error("Error in fetching Product Data ", error);
+    res.json({ Error: "Error in Fetching Specific Product:" });
   }
-})
+});
 
 //admin product router::
-app.use("/api/products/create", upload.single("file"), async (req, res) => {
+app.get("/api/products/create", upload.single("file"), async (req, res) => {
   const { productname, description, category, quantity, price } = req.body;
   const image = req.file ? `/uploads/${req.file.filename}` : "";
 
@@ -134,6 +135,66 @@ app.use("/api/products/create", upload.single("file"), async (req, res) => {
     res.status(400).json({ message: error });
   }
 });
+
+app.get("/api/userProfile/", async (req, res) => {
+  const { email } = req.query; // Email passed as a query parameter
+
+  try {
+    const userProfile = await User.findOne({ email });
+
+    if (!userProfile) {
+      return res.status(404).json({ message: "Profile not found" });
+    }
+
+    const profileData = {
+      firstName: userProfile.firstName,
+      lastName: userProfile.lastName,
+      mobileNumber: userProfile.mobileNumber,
+      addresses: userProfile.addresses,
+      favoriteCategories: userProfile.favoriteCategories,
+      email: userProfile.email
+    };
+
+    res.json(profileData);
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.post("/api/userProfile/update", async (req, res) => {
+  const { email, firstName, lastName, mobileNumber, addresses, favoriteCategories } = req.body;
+
+  try {
+    let userProfile = await User.findOne({ email });
+
+    if (userProfile) {
+      // Update fields only if they are provided in the request
+      if (firstName) userProfile.firstName = firstName;
+      if (lastName) userProfile.lastName = lastName;
+      if (addresses) userProfile.addresses = addresses;
+      if (favoriteCategories) userProfile.favoriteCategories = favoriteCategories;
+
+      // Handle mobile number logic
+      if (!userProfile.mobileNumber && mobileNumber) {
+        userProfile.mobileNumber = mobileNumber;
+      } else if (mobileNumber && userProfile.mobileNumber !== mobileNumber) {
+        return res.status(400).json({ message: "Mobile number cannot be changed" });
+      }
+
+      // Save the updated profile
+      await userProfile.save();
+      res.json(userProfile);
+    } else {
+      return res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

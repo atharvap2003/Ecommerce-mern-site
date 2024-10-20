@@ -16,7 +16,7 @@ const RegisterPage = () => {
     });
     if (response.status === 200) {
       alert("Registration Successfull");
-      navigate("/login");
+      navigate("/api/login");
     } else {
       alert("Registration failed");
     }
@@ -100,7 +100,7 @@ const RegisterPage = () => {
         </form>
         <div className="mt-2 flex items-center gap-1">
             <p className="">Have an Account?? Then</p>
-            <a href="/login" className="text-blue-400">
+            <a href="/api/user/login" className="text-blue-400">
               Login
             </a>
           </div>
