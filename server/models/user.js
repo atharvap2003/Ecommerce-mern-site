@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
 const addressSchema = new Schema({
-  street: { type: String, required: true },
-  city: { type: String, required: true },
-  state: { type: String, required: true },
-  postalCode: { type: String, required: true },
-  country: { type: String, required: true },
+  street: { type: String },
+  city: { type: String  },
+  state: { type: String  },
+  postalCode: { type: String  },
+  country: { type: String },
 });
 
 const userSchema = new Schema({
@@ -35,15 +35,12 @@ const userSchema = new Schema({
   // Profile details
   firstName: {
     type: String,
-    required: true,
   },
   lastName: {
     type: String,
-    required: true,
   },
   mobileNumber: {
     type: String,
-    required: true,
     match: [/^\d{10,15}$/, "Please enter a valid mobile number"],
   },
   addresses: [addressSchema], // Array of addresses

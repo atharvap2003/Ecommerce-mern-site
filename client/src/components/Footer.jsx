@@ -11,7 +11,7 @@ const Footer = () => {
     <footer className="bg-gray-300 text-black py-8">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-evenly items-center">
-          <h2 className="text-2xl font-bold">Our Company</h2>
+          <h2 className="text-2xl font-bold">ElectroShop</h2>
           <div className="mb-4 md:mb-0 ">
             <ul className="mt-2 flex flex-row gap-2">
               <li className="mb-2">

@@ -106,7 +106,7 @@ const UserProfile = () => {
   if (isLoading) return <p>Loading profile...</p>;
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-md mt-6">
+    <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-md my-6">
       <h2 className="text-2xl font-semibold mb-4">User Profile</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -248,7 +248,7 @@ const UserProfile = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+          className="bg-orange-400 text-white px-4 py-2 rounded-md hover:bg-orange-500"
         >
           Save Profile
         </button>

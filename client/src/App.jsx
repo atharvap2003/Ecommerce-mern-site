@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import ProductUpload from "./pages/productupload";
 import ProductDescription from "./pages/ProductDescription";
 import UserProfile from "./pages/userProfile";
+import CartPage from "./pages/CartPage";
 
 import "./App.css";
 
@@ -33,6 +34,7 @@ function App() {
           <Route path="/productupload" element={<ProductUpload/>} />
           <Route path="/product/:id" element={<ProductDescription product={sampleProduct}/>}/>
           <Route path="/productdescription" element={<ProductDescription />} />
+          <Route path="/cart" element={<CartPage/>} />
         </Routes>
         <Footer/>
       </BrowserRouter>
